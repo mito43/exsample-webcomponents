@@ -9,11 +9,14 @@ class HelloWorld extends HTMLElement {
     super();
     // Shadow DOMの作成
     const shadowRoot = this.attachShadow({mode: 'open'});
-    // 試しに変数化してみる
+    // 試しにフォントサイズを変数化してみる
     const fontSize = 50;
     shadowRoot.innerHTML = `
       <style>
-        /* 親ページのルールによる指定の優先度が、要素で定義されている :host ルールよりも高いので、外部のスタイルが優先される */
+        /* ホストのスタイルを決める
+           ShadowRootの外では使えない
+           親ページのルールによる指定の優先度が、要素で定義されている :host ルールよりも高いので、外部のスタイルが優先される
+        */
         :host {
           /* カスタムエレメントはデフォルトでinlne要素 */
           display: block;
