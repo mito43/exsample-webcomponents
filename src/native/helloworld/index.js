@@ -14,8 +14,8 @@ class HelloWorld extends HTMLElement {
     shadowRoot.innerHTML = `
       <style>
         /* ホストのスタイルを決める
-           ShadowRootの外では使えない
-           親ページのルールによる指定の優先度が、要素で定義されている :host ルールよりも高いので、外部のスタイルが優先される
+          ShadowRootの外では使えない
+          親ページのルールによる指定の優先度が、要素で定義されている :host ルールよりも高いので、外部のスタイルが優先される
         */
         :host {
           /* カスタムエレメントはデフォルトでinlne要素 */
