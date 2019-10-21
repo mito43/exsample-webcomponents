@@ -1,7 +1,7 @@
 <html>
   <head>
     <!--
-      type="module"でdeferのように振る舞うので、DOM解析後にscriptが実行される。
+      type="module"でdeferのように振る舞うので、DOM解析後にscriptが実行される
      -->
     <script type="module" src="index.js"></script>
   </head>
@@ -9,12 +9,16 @@
     <!--
       カスタムエレメントの命名規則ではハイフンを含めなければいけない。(W3Cを参照)
       @see: https://w3c.github.io/webcomponents/spec/custom/#valid-custom-element-name
-      ハイフンを入れずに、以下のようなタグを宣言すると`HTMLUnknownElement` タグとして解析されるが、HTMLの仕様上は許可されている。
+      ハイフンを入れずに、以下のようなタグを宣言すると`HTMLUnknownElement` タグとして解析されるが、HTMLの仕様上は許可されている
       // <hogehuga> は HTMLElement であり HTMLUnknownElement である
       document.createElement('hogehuga') instanceof HTMLUnknownElement === true
       // <x-hogehuga> は HTMLElement であり HTMLUnknownElement ではない
       document.createElement('x-hogehuga') instanceof HTMLElement === true
      -->
+     <!--
+       Shadow Rootの外にタグを置きCSSのスタイルの影響を受けないかを確認
+     -->
+    <h1>Native WebComponents</h1>
     <x-helloworld></x-helloworld>
   </body>
 </html>
