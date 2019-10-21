@@ -5,10 +5,12 @@ class HelloWorld extends HTMLElement {
   // カスタムエレメントのコンストラクタで行う処理(whatwg参考)
   // @see: https://html.spec.whatwg.org/multipage/custom-elements.html#custom-element-conformance
   constructor() {
-    // HTMLElementのコンストラクタを呼ぶ
+    // 上位クラスコンストラクタを呼ぶ、constructor内で一番上にsuper()を記述
     super();
     // Shadow DOMの作成
     const shadowRoot = this.attachShadow({mode: 'open'});
+    // 試しに変数化してみる
+    const fontSize = 50;
     shadowRoot.innerHTML = `
       <style>
         /* 親ページのルールによる指定の優先度が、要素で定義されている :host ルールよりも高いので、外部のスタイルが優先される */
@@ -22,7 +24,7 @@ class HelloWorld extends HTMLElement {
           font-family: Helvetica, Arial, sans-serif;
           text-align: center;
           font-weigh: bold;
-          font-size: 50px;
+          font-size: ${fontSize}px;
         }
       </style>
       <h1>Hello!</h1>
