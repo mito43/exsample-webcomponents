@@ -8,6 +8,7 @@ class HelloWorld extends HTMLElement {
     // 上位クラスコンストラクタを呼ぶ、constructor内で一番上にsuper()を記述
     super();
     // Shadow DOMの作成
+    // modeをcloseにするとshadowRootが隠れるのでアクセスできず、nullを返す
     const shadowRoot = this.attachShadow({mode: 'open'});
     // 試しにフォントサイズを変数化してみる
     const fontSize = 50;
