@@ -1,4 +1,3 @@
-
 class HelloWorld extends HTMLElement {
   constructor() {
     super();
