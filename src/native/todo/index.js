@@ -28,7 +28,27 @@ class App extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
     this._shadowRoot.appendChild(template.content.cloneNode(true));
+    this._totoList = [];
+    this.submitBtn = this._shadowRoot.querySelector('button');
+    this.submitBtn.addEventListener('click', this._add.bind(this));
+  }
+
+  connectedCallback() {
+    console.log('Custom element added to page.');
+  }
+
+  disconnectedCallback() {
+    console.log('Custom element removed from page.');
+  }
+
+  adoptedCallback() {
+    console.log('Custom element moved to new page.');
+  }
+
+  _add(e) {
+    console.log('Click');
   }
 }
+
 
 window.customElements.define('x-app', App);
