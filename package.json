@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:helloworld": "serve ./src/native/helloworld"
+    "dev:native:helloworld": "serve ./src/native/helloworld",
+    "dev:native:todo": "serve ./src/native/todo"
   },
   "author": "",
   "license": "",
