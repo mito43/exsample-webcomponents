@@ -2,6 +2,8 @@
 // ページロード時点ではなく、ランタイム時にインスタンス化でき、レンダリング後にはこのタグは表示されない、
 // 又<template>タグの中身はアクティベートされるまでレンダリングされない。(スクリプトや画像リソース等読み込まれない)
 const template = document.createElement('template');
+// innerHTMLはDOM XSSなどがあるので、一般的にはあまり使われない。
+// 一般的には DOM APIを用いて、タグを生成する(InnerHTMLの方が直接文字列を変換するので実は早い)
 template.innerHTML = `
   <style>
   /* ホストのスタイルを決める
