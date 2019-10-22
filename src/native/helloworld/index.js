@@ -36,5 +36,5 @@ class HelloWorld extends HTMLElement {
   }
 }
 
-// カスタムエレメントの登録
+// カスタムエレメントの登録、第1引数にターゲットのタグ名、第2引数に挿入するエレメントのクラス
 window.customElements.define('x-helloworld', HelloWorld);
