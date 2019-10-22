@@ -10,8 +10,17 @@ template.innerHTML = `
     text-align: center;
     font-size: 50px;
   }
+  form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
   </style>
   <h1>Todo App</h1>
+  <form>
+    <input type="text"></input>
+    <button type="button">submit</button>
+  </form>
 `;
 
 class App extends HTMLElement {
