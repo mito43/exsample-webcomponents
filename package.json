@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev:native:helloworld": "serve ./src/native/helloworld",
-    "dev:native:todo": "serve ./src/native/todo"
+    "dev:native:todo": "serve ./src/native/todo",
+    "dev:native:adapted-callback": "serve ./src/native/adapted-callback"
   },
   "author": "",
   "license": "",
