@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      class Hello extends HTMLElement {
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({mode: 'open'});
+          shadowRoot.innerHTML = `
+            <style>
+              h1 {
+                color: blue;
+                font-family: Helvetica;
+                font-weigh: bold;
+                font-size: 50px;
+              }
+            </style>
+            <h1>Hello</h1>
+          `;
+        }
+        connectedCallback() {
+          console.log('Hello element added to page.');
+        }
+
+        disconnectedCallback() {
+          console.log('Hello element removed from page.');
+        }
+
+        adoptedCallback() {
+          console.log('Hello element moved to new page.');
+        }
+      }
+      window.customElements.define('x-hello', Hello);
+    </script>
+  </head>
+  <body>
+    <x-hello></x-hello>
+  </body>
+</html>

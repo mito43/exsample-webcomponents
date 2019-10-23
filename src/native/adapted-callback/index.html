@@ -15,11 +15,20 @@
         display: block;
       }
     </style>
-    <script type="module" src="index.js"></script>
+    <script>
+      window.onload = () => {
+        const iframe = document.querySelector('iframe');
+        const helloElm = iframe.contentDocument.querySelector('x-hello');
+        const container = document.querySelector('.container');
+        document.querySelector('button').addEventListener('click', () => {
+          container.appendChild(document.adoptNode(helloElm));
+        }, false);
+      };
+    </script>
   </head>
   <body>
     <h1>Adapted Callback</h1>
-    <iframe src="./page.html"></iframe>
+    <iframe src="./hello.html"></iframe>
     <button type="button">submit</button>
     <div class="container"></div>
   </body>
