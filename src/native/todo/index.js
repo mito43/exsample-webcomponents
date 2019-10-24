@@ -41,5 +41,4 @@ class App extends HTMLElement {
   }
 }
 
-
 window.customElements.define('x-app', App);
