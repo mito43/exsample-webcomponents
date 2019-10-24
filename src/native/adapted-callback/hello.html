@@ -2,22 +2,51 @@
 <html>
   <head>
     <script>
+      const template = document.createElement('template');
+      template.innerHTML = `
+        <style>
+          h1 {
+            color: blue;
+            font-family: Helvetica;
+            font-weigh: bold;
+            font-size: 50px;
+          }
+        </style>
+        <h1></h1>
+      `;
       class Hello extends HTMLElement {
+        static get observedAttributes() {
+          console.log('Call observedAttributes.');
+          return ['label'];
+        }
+
+        get label() {
+          return this.getAttribute('label');
+        }
+
+        set label(val) {
+          if (val) {
+            this.setAttribute('label', val);
+          } else {
+            this.removeAttribute('label');
+          }
+        }
+
         constructor() {
           super();
-          const shadowRoot = this.attachShadow({mode: 'open'});
-          shadowRoot.innerHTML = `
-            <style>
-              h1 {
-                color: blue;
-                font-family: Helvetica;
-                font-weigh: bold;
-                font-size: 50px;
-              }
-            </style>
-            <h1>Hello</h1>
-          `;
+          this._shadowRoot = this.attachShadow({mode: 'open'});
+          this._shadowRoot.appendChild(template.content.cloneNode(true));
+          this._helloElm = this._shadowRoot.querySelector('h1');
         }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          switch(name){
+            case 'label':
+              this._helloElm.innerHTML = newValue;
+              break;
+          }
+        }
+
         connectedCallback() {
           console.log('Hello element added to page.');
         }
@@ -28,6 +57,7 @@
 
         adoptedCallback() {
           console.log('Hello element moved to new page.');
+          this.dispatchEvent(new CustomEvent('onMoved'));
         }
       }
       window.customElements.define('x-hello', Hello);

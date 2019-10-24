@@ -19,6 +19,10 @@
       window.onload = () => {
         const iframe = document.querySelector('iframe');
         const helloElm = iframe.contentDocument.querySelector('x-hello');
+        helloElm.label = 'Before Hello';
+        helloElm.addEventListener('onMoved', () => {
+          helloElm.label = 'After Hello';
+        });
         const container = document.querySelector('.container');
         document.querySelector('button').addEventListener('click', () => {
           container.appendChild(document.adoptNode(helloElm));
