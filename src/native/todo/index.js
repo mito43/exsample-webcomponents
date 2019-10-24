@@ -30,23 +30,14 @@ class App extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this._totoList = [];
     this.submitBtn = this._shadowRoot.querySelector('button');
-    this.submitBtn.addEventListener('click', this._add.bind(this));
+    this.submitBtn.addEventListener('click', () => {
+      const input = this._shadowRoot.querySelector('input');
+      this._add(input.value);
+    });
   }
 
-  connectedCallback() {
-    console.log('Custom element added to page.');
-  }
-
-  disconnectedCallback() {
-    console.log('Custom element removed from page.');
-  }
-
-  adoptedCallback() {
-    console.log('Custom element moved to new page.');
-  }
-
-  _add(e) {
-    console.log('Click');
+  _add(val) {
+    console.log(val);
   }
 }
 
