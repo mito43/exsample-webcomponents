@@ -14,9 +14,8 @@ template.innerHTML = `
     font-size: 50px;
   }
   form {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
   }
   </style>
   <h1>Todo App</h1>
@@ -24,7 +23,7 @@ template.innerHTML = `
     <input type="text"></input>
     <button type="button">submit</button>
   </form>
-  <ul></ul>
+  <div id="container"></div>
 `;
 
 class App extends HTMLElement {
@@ -33,17 +32,17 @@ class App extends HTMLElement {
     this._shadowRoot = this.attachShadow({mode: 'open'});
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this._todoList = [];
+    this._container = this._shadowRoot.getElementById('container');
     this.submitBtn = this._shadowRoot.querySelector('button');
     this.submitBtn.addEventListener('click', () => this._add());
-    this.todoListElm = this._shadowRoot.querySelector('ul');
   }
 
   _render() {
-    this.todoListElm.innerHTML = '';
+    this._container.innerHTML = '';
     this._todoList.forEach(item => {
       const todoElm = document.createElement('x-todo');
       todoElm.label = item.label;
-      this.todoListElm.appendChild(todoElm);
+      this._container.appendChild(todoElm);
     });
   }
 

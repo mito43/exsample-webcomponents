@@ -5,6 +5,7 @@ template.innerHTML = `
       display: block;
       font-family: Helvetica;
       font-weight: bold;
+      padding: 10px;
     }
   </style>
   <label></label>
