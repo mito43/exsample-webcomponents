@@ -22,6 +22,7 @@ class HTMLTodoElement extends HTMLElement {
         this._label = newValue;
         break;
     }
+    this._render();
   }
 
   constructor() {
