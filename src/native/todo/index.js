@@ -1,3 +1,5 @@
+import './todo.js';
+
 const template = document.createElement('template');
 template.innerHTML = `
   <style>
@@ -15,10 +17,6 @@ template.innerHTML = `
     display: flex;
     align-items: flex-start;
     justify-content: center;
-  }
-  li {
-    font-size: 24px;
-    color: gray;
   }
   </style>
   <h1>Todo App</h1>
@@ -43,8 +41,8 @@ class App extends HTMLElement {
   _render() {
     this.todoListElm.innerHTML = '';
     this._todoList.forEach(item => {
-      const todoElm = document.createElement('li');
-      todoElm.innerHTML = item.label;
+      const todoElm = document.createElement('x-todo');
+      todoElm.label = item.label;
       this.todoListElm.appendChild(todoElm);
     });
   }
