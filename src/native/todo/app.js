@@ -31,24 +31,43 @@ class App extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
     this._shadowRoot.appendChild(template.content.cloneNode(true));
-    this._todoList = [];
+    this._todoList = [
+      {
+        label: 'TaskA',
+        checked: false,
+      },
+      {
+        label: 'TaskB',
+        checked: true,
+      },
+      {
+        label: 'TaskC',
+        checked: false,
+      }
+    ];
     this._container = this._shadowRoot.getElementById('container');
     this.submitBtn = this._shadowRoot.querySelector('button');
     this.submitBtn.addEventListener('click', () => this._add());
   }
 
+  connectedCallback() {
+    this._render();
+  }
+
   _render() {
     this._container.innerHTML = '';
-    this._todoList.forEach(item => {
+    this._todoList.forEach(item=> {
       const todoElm = document.createElement('x-todo');
+      todoElm.addEventListener('onToggle', () => todoElm.checked = !todoElm.checked);
       todoElm.label = item.label;
+      todoElm.checked = item.checked;
       this._container.appendChild(todoElm);
     });
   }
 
   _add() {
     const inputElm = this._shadowRoot.querySelector('input');
-    this._todoList.push({label: inputElm.value, isChecked: false});
+    this._todoList.push({label: inputElm.value, checked: false});
     inputElm.value = '';
     this._render();
   }

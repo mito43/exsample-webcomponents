@@ -7,19 +7,27 @@ template.innerHTML = `
       font-weight: bold;
       padding: 10px;
     }
+
   </style>
+  <input type="checkbox">
   <label></label>
 `;
 
 class HTMLTodoElement extends HTMLElement {
   static get observedAttributes() {
-    return ['label'];
+    return ['index', 'label', 'checked'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch(name){
+      case 'index':
+        this._index = newValue;
+        break;
       case 'label':
         this._label = newValue;
+        break;
+      case 'checked':
+        this._checked = newValue;
         break;
     }
     this._render();
@@ -30,6 +38,9 @@ class HTMLTodoElement extends HTMLElement {
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this._label =  '';
+    this._checked =  false;
+    this._checkBoxElm = this._shadowRoot.querySelector('input');
+    this._checkBoxElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onToggle')));
     this._labelElm = this._shadowRoot.querySelector('label');
   }
 
@@ -39,6 +50,8 @@ class HTMLTodoElement extends HTMLElement {
 
   _render() {
     this._labelElm.innerHTML = this._label;
+    this._checkBoxElm.checked = this._checked;
+    this._labelElm.style.textDecoration = this._checked ? 'line-through'  : 'none';
   }
 
   get label() {
@@ -50,6 +63,18 @@ class HTMLTodoElement extends HTMLElement {
       this.setAttribute('label', val);
     } else {
       this.removeAttribute('label');
+    }
+  }
+
+  get checked() {
+    return this.getAttribute('checked');
+  }
+
+  set checked(val) {
+    if (val) {
+      this.setAttribute('checked', val);
+    } else {
+      this.removeAttribute('checked');
     }
   }
 }
