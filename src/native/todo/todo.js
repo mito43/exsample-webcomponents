@@ -15,14 +15,11 @@ template.innerHTML = `
 
 class HTMLTodoElement extends HTMLElement {
   static get observedAttributes() {
-    return ['index', 'label', 'checked'];
+    return ['label', 'checked'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch(name){
-      case 'index':
-        this._index = newValue;
-        break;
       case 'label':
         this._label = newValue;
         break;
@@ -46,7 +43,7 @@ class HTMLTodoElement extends HTMLElement {
 
   connectedCallback() {
     this._render();
-  }
+  }s
 
   _render() {
     this._labelElm.innerHTML = this._label;
