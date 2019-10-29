@@ -11,6 +11,7 @@ template.innerHTML = `
   </style>
   <input type="checkbox">
   <label></label>
+  <button type="button">remove</button>
 `;
 
 class HTMLTodoElement extends HTMLElement {
@@ -38,6 +39,8 @@ class HTMLTodoElement extends HTMLElement {
     this._checked =  false;
     this._checkBoxElm = this._shadowRoot.querySelector('input');
     this._checkBoxElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onToggle')));
+    this._removeElm = this._shadowRoot.querySelector('button');
+    this._removeElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onRemove')));
     this._labelElm = this._shadowRoot.querySelector('label');
   }
 

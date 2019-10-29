@@ -59,6 +59,9 @@ class App extends HTMLElement {
     this._todoList.forEach(item=> {
       const todoElm = document.createElement('x-todo');
       todoElm.addEventListener('onToggle', () => todoElm.checked = !todoElm.checked);
+      todoElm.addEventListener('onRemove', () => {
+        console.log("Remove");
+      });
       todoElm.label = item.label;
       todoElm.checked = item.checked;
       this._container.appendChild(todoElm);
