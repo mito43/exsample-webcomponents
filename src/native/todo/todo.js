@@ -7,7 +7,6 @@ template.innerHTML = `
       font-weight: bold;
       padding: 10px;
     }
-
   </style>
   <input type="checkbox">
   <label></label>
@@ -16,7 +15,7 @@ template.innerHTML = `
 
 class HTMLTodoElement extends HTMLElement {
   static get observedAttributes() {
-    return ['label', 'checked'];
+    return ['label', 'checked', 'index'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -27,6 +26,9 @@ class HTMLTodoElement extends HTMLElement {
       case 'checked':
         this._checked = newValue;
         break;
+      case 'index':
+        this._index = newValue;
+        break;
     }
     this._render();
   }
@@ -36,17 +38,18 @@ class HTMLTodoElement extends HTMLElement {
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this._label =  '';
+    this._index = 0;
     this._checked =  false;
     this._checkBoxElm = this._shadowRoot.querySelector('input');
     this._checkBoxElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onToggle')));
     this._removeElm = this._shadowRoot.querySelector('button');
-    this._removeElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onRemove')));
+    this._removeElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onRemove'), { index: this._index }));
     this._labelElm = this._shadowRoot.querySelector('label');
   }
 
   connectedCallback() {
     this._render();
-  }s
+  }
 
   _render() {
     this._labelElm.innerHTML = this._label;
@@ -75,6 +78,18 @@ class HTMLTodoElement extends HTMLElement {
       this.setAttribute('checked', val);
     } else {
       this.removeAttribute('checked');
+    }
+  }
+
+  get index() {
+    return this.getAttribute('index');
+  }
+
+  set index(val) {
+    if (val) {
+      this.setAttribute('index', val);
+    } else {
+      this.removeAttribute('index');
     }
   }
 }
