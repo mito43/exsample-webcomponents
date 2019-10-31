@@ -41,9 +41,13 @@ class HTMLTodoElement extends HTMLElement {
     this._index = 0;
     this._checked =  false;
     this._checkBoxElm = this._shadowRoot.querySelector('input');
-    this._checkBoxElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onToggle')));
+    this._checkBoxElm.addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
+    });
     this._removeElm = this._shadowRoot.querySelector('button');
-    this._removeElm.addEventListener('click', () => this.dispatchEvent(new CustomEvent('onRemove'), { index: this._index }));
+    this._removeElm.addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
+    });
     this._labelElm = this._shadowRoot.querySelector('label');
   }
 

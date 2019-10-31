@@ -58,8 +58,8 @@ class App extends HTMLElement {
     this._container.innerHTML = '';
     this._todoList.forEach((item, index)=> {
       const todoElm = document.createElement('x-todo');
-      todoElm.addEventListener('onToggle', () => todoElm.checked = !todoElm.checked);
-      todoElm.addEventListener('onRemove', e => this._remove(e));
+      todoElm.addEventListener('onToggle', this._toggle.bind(this));
+      todoElm.addEventListener('onRemove', this._remove.bind(this));
       todoElm.label = item.label;
       todoElm.checked = item.checked;
       todoElm.index = index;
@@ -74,13 +74,18 @@ class App extends HTMLElement {
     this._render();
   }
 
-  _remove(e) {
-    this._todoList.splice(e.index, 1);
+  _toggle(e) {
+    const todo = this._todoList[e.detail];
+    const hoge = Object.assign({}, todo, {
+      checked: !todo.checked
+    });
+    this._todoList[e.detail] = hoge;
     this._render();
   }
 
-  _toggle() {
-
+  _remove(e) {
+    this._todoList.splice(e.detail, 1);
+    this._render();
   }
 }
 
