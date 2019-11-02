@@ -59,7 +59,7 @@ class App extends HTMLElement {
 
   _render() {
     this._container.innerHTML = '';
-    this._todoList.forEach((item, index)=> {
+    this._todoList.forEach((item, index) => {
       const todoElm = document.createElement('x-todo');
       todoElm.addEventListener('onToggle', this._toggle.bind(this));
       todoElm.addEventListener('onRemove', this._remove.bind(this));
