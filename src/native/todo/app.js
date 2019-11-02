@@ -17,6 +17,9 @@ template.innerHTML = `
     text-align: center;
     margin-bottom: 20px;
   }
+  #container x-todo {
+    text-align: center;
+  }
   </style>
   <h1>Todo App</h1>
   <form>
