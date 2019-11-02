@@ -7,9 +7,9 @@ template.innerHTML = `
     display: block;
     font-family: Helvetica;
     font-weight: bold;
+    color: black;
   }
   h1 {
-    color: black;
     text-align: center;
     font-size: 50px;
   }
