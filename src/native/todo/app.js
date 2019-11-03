@@ -32,23 +32,23 @@ class App extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
       <style>
-      :host {
-        display: block;
-        font-family: Helvetica;
-        font-weight: bold;
-        color: black;
-      }
-      h1 {
-        text-align: center;
-        font-size: 50px;
-      }
-      form {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      #container x-todo {
-        text-align: center;
-      }
+        :host {
+          display: block;
+          font-family: Helvetica;
+          font-weight: bold;
+          color: black;
+        }
+        h1 {
+          text-align: center;
+          font-size: 50px;
+        }
+        form {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        #container x-todo {
+          text-align: center;
+        }
       </style>
       <h1>Todo App</h1>
       <form>
