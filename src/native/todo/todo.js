@@ -24,10 +24,10 @@ class HTMLTodoElement extends HTMLElement {
         this._label = newValue;
         break;
       case 'checked':
-        this._checked = newValue;
+        this._checked = this.hasAttribute('checked');
         break;
       case 'index':
-        this._index = newValue;
+        this._index = Number(newValue);
         break;
     }
     this._render();

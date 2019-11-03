@@ -15,10 +15,10 @@ class HTMLTodoElement extends HTMLElement {
         this._checked = this.hasAttribute('checked');
         break;
       case 'index':
-        this._index = parseInt(newValue);;
+        this._index = Number(newValue);
         break;
     }
-    render(this.template, this._shadowRoot, {eventContext: this});
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
   constructor() {
@@ -30,18 +30,10 @@ class HTMLTodoElement extends HTMLElement {
   }
 
   connectedCallback() {
-    render(this.template, this._shadowRoot, {eventContext: this});
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
-  _dispatchToggle() {
-    this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
-  }
-
-  _dispatchRemove() {
-    this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
-  }
-
-  get template() {
+  _template() {
     return html`
       <style>
         :host {
@@ -60,6 +52,14 @@ class HTMLTodoElement extends HTMLElement {
       <label class=${this._checked ? 'completed' : ''}>${this._label}</label>
       <button type="button" @click=${this._dispatchRemove}>remove</button>
     `;
+  }
+
+  _dispatchToggle() {
+    this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
+  }
+
+  _dispatchRemove() {
+    this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
   }
 
   get label() {

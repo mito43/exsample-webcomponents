@@ -22,10 +22,10 @@ class App extends HTMLElement {
   }
 
   connectedCallback() {
-    render(this.template, this._shadowRoot, {eventContext: this});
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
-  get template() {
+  _template() {
     return html`
       <style>
         :host {
@@ -51,8 +51,8 @@ class App extends HTMLElement {
         <input type="text"></input>
         <button type="button" @click=${this._add}>submit</button>
       </form>
-      <div id="container">
-        ${this.todoList.map((item, index) => html`
+      <main id="container">
+        ${this._todoList.map((item, index) => html`
           <x-todo
             ?checked=${item.checked}
             .index=${index}
@@ -62,37 +62,29 @@ class App extends HTMLElement {
           </x-todo>
           `
         )}
-      </div>
+      </main>
     `;
   }
 
   _add() {
     const inputElm = this._shadowRoot.querySelector('input');
-    if(inputElm.value.length > 0) {
-      this.todoList = [...this._todoList, { label: inputElm.value, checked: false }];
-      inputElm.value = '';
-    }
+    this._todoList = [...this._todoList, { label: inputElm.value, checked: false }];
+    inputElm.value = '';
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
   _toggle(e) {
-    this.todoList = this._todoList.map((todo, index) => {
-      return index === e.detail ? {...todo, checked: !todo.checked} : todo;
+    this._todoList = this._todoList.map((item, index) => {
+      return index === e.detail ? {...item, checked: !item.checked} : item;
     });
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
   _remove(e) {
-    this.todoList = this._todoList.filter((todo, index) => {
+    this._todoList = this._todoList.filter((todo, index) => {
       return index !== e.detail;
     });
-  }
-
-  set todoList(value) {
-    this._todoList = value;
-    render(this.template, this._shadowRoot, {eventContext: this});
-  }
-
-  get todoList() {
-    return this._todoList;
+    render(this._template(), this._shadowRoot, {eventContext: this});
   }
 }
 

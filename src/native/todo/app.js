@@ -4,7 +4,7 @@ class App extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
-    this._shadowRoot.appendChild(this._template().content.cloneNode(true));
+    this._shadowRoot.appendChild(this.template.content.cloneNode(true));
     this._todoList = [
       {
         label: 'TaskA',
@@ -26,7 +26,6 @@ class App extends HTMLElement {
     this._submitBtn.clearListner = () => {
       this._submitBtn.removeEventListener('click', clickListener)
     };
-    this._render();
   }
 
   connectedCallback() {
@@ -35,43 +34,9 @@ class App extends HTMLElement {
 
   disconnectedCallback() {
     this._submitBtn.clearListner();
-    this._submitBtn = null;
     for (let item of this._container.children) {
       item.clearListner();
-      item = null;
     }
-  }
-
-  _template() {
-    const template = document.createElement('template');
-    template.innerHTML = `
-      <style>
-        :host {
-          display: block;
-          font-family: Helvetica;
-          font-weight: bold;
-          color: black;
-        }
-        h1 {
-          text-align: center;
-          font-size: 50px;
-        }
-        form {
-          text-align: center;
-          margin-bottom: 20px;
-        }
-        #container x-todo {
-          text-align: center;
-        }
-      </style>
-      <h1>Todo App</h1>
-      <form>
-        <input type="text"></input>
-        <button type="button">submit</button>
-      </form>
-      <div id="container"></div>
-  `;
-    return template;
   }
 
   _render() {
@@ -113,6 +78,47 @@ class App extends HTMLElement {
     this._todoList.splice(e.detail, 1);
     debugger
     this._render();
+  }
+
+  get template() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          font-family: Helvetica;
+          font-weight: bold;
+          color: black;
+        }
+        h1 {
+          text-align: center;
+          font-size: 50px;
+        }
+        form {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        #container x-todo {
+          text-align: center;
+        }
+      </style>
+      <h1>Todo App</h1>
+      <form>
+        <input type="text"></input>
+        <button type="button">submit</button>
+      </form>
+      <div id="container"></div>
+  `;
+    return template;
+  }
+
+  set todoList(value) {
+    this._todoList = value;
+    this._render();
+  }
+
+  get todoList() {
+    return this._todoList;
   }
 }
 
