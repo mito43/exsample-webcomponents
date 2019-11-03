@@ -33,6 +33,14 @@ class HTMLTodoElement extends HTMLElement {
     render(this.template, this._shadowRoot, {eventContext: this});
   }
 
+  _dispatchToggle() {
+    this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
+  }
+
+  _dispatchRemove() {
+    this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
+  }
+
   get template() {
     return html`
       <style>
@@ -52,14 +60,6 @@ class HTMLTodoElement extends HTMLElement {
       <label class=${this._checked ? 'completed' : ''}>${this._label}</label>
       <button type="button" @click=${this._dispatchRemove}>remove</button>
     `;
-  }
-
-  _dispatchToggle() {
-    this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
-  }
-
-  _dispatchRemove() {
-    this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
   }
 
   get label() {

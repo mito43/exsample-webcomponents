@@ -5,7 +5,7 @@ class App extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
-    this._todoList = [
+    this.todoList = [
       {
         label: 'TaskA',
         checked: false,
@@ -22,10 +22,10 @@ class App extends HTMLElement {
   }
 
   connectedCallback() {
-    render(this.template(), this._shadowRoot, {eventContext: this});
+    render(this.template, this._shadowRoot, {eventContext: this});
   }
 
-  template() {
+  get template() {
     return html`
       <style>
         :host {
@@ -66,8 +66,7 @@ class App extends HTMLElement {
     `;
   }
 
-  _add(e) {
-    e.preventDefault();
+  _add() {
     const inputElm = this._shadowRoot.querySelector('input');
     if(inputElm.value.length > 0) {
       this.todoList = [...this._todoList, { label: inputElm.value, checked: false }];
@@ -89,7 +88,7 @@ class App extends HTMLElement {
 
   set todoList(value) {
     this._todoList = value;
-    render(this.template(), this._shadowRoot, {eventContext: this});
+    render(this.template, this._shadowRoot, {eventContext: this});
   }
 
   get todoList() {
