@@ -1,18 +1,3 @@
-const template = document.createElement('template');
-template.innerHTML = `
-  <style>
-    :host {
-      display: block;
-      font-family: Helvetica;
-      font-weight: bold;
-      padding: 10px;
-    }
-  </style>
-  <input type="checkbox">
-  <label></label>
-  <button type="button">remove</button>
-`;
-
 class HTMLTodoElement extends HTMLElement {
   static get observedAttributes() {
     return ['label', 'checked', 'index'];
@@ -36,18 +21,18 @@ class HTMLTodoElement extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
-    this._shadowRoot.appendChild(template.content.cloneNode(true));
+    this._shadowRoot.appendChild(this._template().content.cloneNode(true));
     this._label =  '';
     this._index = 0;
     this._checked =  false;
     this._checkBoxElm = this._shadowRoot.querySelector('input');
-    this._checkBoxElm.addEventListener('click', () => {
-      this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
-    });
+    const toggleListener = this._dispatchToggle.bind(this);
+    this._checkBoxElm.addEventListener('click', toggleListener);
+    this._checkBoxElm.clearListner = () => this._checkBoxElm.removeEventListener('click', toggleListener);
     this._removeElm = this._shadowRoot.querySelector('button');
-    this._removeElm.addEventListener('click', () => {
-      this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
-    });
+    const removeListener = this._dispatchRemove.bind(this);
+    this._removeElm.addEventListener('click', this._dispatchRemove.bind(this));
+    this._removeElm.clearListner = () => this._removeElm.removeEventListener('click', removeListener);
     this._labelElm = this._shadowRoot.querySelector('label');
   }
 
@@ -55,11 +40,43 @@ class HTMLTodoElement extends HTMLElement {
     this._render();
   }
 
+  disconnectedCallback() {
+    this._checkBoxElm.clearListner();
+    this._removeElm.clearListner();
+  }
+
+  _template() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          font-family: Helvetica;
+          font-weight: bold;
+          padding: 10px;
+        }
+      </style>
+      <input type="checkbox">
+      <label></label>
+      <button type="button">remove</button>
+    `;
+    return template;
+  }
+
   _render() {
     this._labelElm.innerHTML = this._label;
     this._checkBoxElm.checked = this._checked;
     this._labelElm.style.textDecoration = this._checked ? 'line-through'  : 'none';
   }
+
+  _dispatchToggle() {
+    this.dispatchEvent(new CustomEvent('onToggle', { detail: this._index }));
+  }
+
+  _dispatchRemove() {
+    this.dispatchEvent(new CustomEvent('onRemove', { detail: this._index }));
+  }
+
 
   get label() {
     return this.getAttribute('label');
@@ -79,7 +96,7 @@ class HTMLTodoElement extends HTMLElement {
 
   set checked(val) {
     if (val) {
-      this.setAttribute('checked', val);
+      this.setAttribute('checked', '');
     } else {
       this.removeAttribute('checked');
     }

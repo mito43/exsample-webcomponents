@@ -51,7 +51,7 @@ class App extends HTMLElement {
         <input type="text"></input>
         <button type="button" @click=${this._add}>submit</button>
       </form>
-      <main id="container">
+      <div id="container">
         ${this._todoList.map((item, index) => html`
           <x-todo
             ?checked=${item.checked}
@@ -62,7 +62,7 @@ class App extends HTMLElement {
           </x-todo>
           `
         )}
-      </main>
+      </div>
     `;
   }
 
