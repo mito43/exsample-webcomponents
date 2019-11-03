@@ -21,10 +21,10 @@ class App extends HTMLElement {
     ];
     this._container = this._shadowRoot.getElementById('container');
     this._submitBtn = this._shadowRoot.querySelector('button');
-    const clickLisner =  this._add.bind(this);
-    this._submitBtn.addEventListener('click', clickLisner);
+    const clickListener =  this._add.bind(this);
+    this._submitBtn.addEventListener('click', clickListener);
     this._submitBtn.clearListner = () => {
-      this._submitBtn.removeEventListener('click', clickLisner)
+      this._submitBtn.removeEventListener('click', clickListener)
     };
   }
 
