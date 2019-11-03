@@ -20,12 +20,25 @@ class App extends HTMLElement {
       }
     ];
     this._container = this._shadowRoot.getElementById('container');
-    this.submitBtn = this._shadowRoot.querySelector('button');
-    this.submitBtn.addEventListener('click', () => this._add());
+    this._submitBtn = this._shadowRoot.querySelector('button');
+    const clickLisner =  this._add.bind(this);
+    this._submitBtn.addEventListener('click', clickLisner);
+    this._submitBtn.clearListner = () => {
+      this._submitBtn.removeEventListener('click', clickLisner)
+    };
   }
 
   connectedCallback() {
     this._render();
+  }
+
+  disconnectedCallback() {
+    this._submitBtn.clearListner();
+    this._submitBtn = null;
+    for (let item of this._container.children) {
+      item.clearListner();
+      item = null;
+    }
   }
 
   _template() {
@@ -64,16 +77,23 @@ class App extends HTMLElement {
     this._container.innerHTML = '';
     this._todoList.forEach((item, index) => {
       const todoElm = document.createElement('x-todo');
-      todoElm.addEventListener('onToggle', this._toggle.bind(this));
-      todoElm.addEventListener('onRemove', this._remove.bind(this));
       todoElm.label = item.label;
       todoElm.checked = item.checked;
       todoElm.index = index;
+      const onToggleListener = this._toggle.bind(this);
+      const onRemoveListener = this._toggle.bind(this);
+      todoElm.addEventListener('onToggle', onToggleListener);
+      todoElm.addEventListener('onRemove', onRemoveListener);
+      todoElm.clearListner = () => {
+        todoElm.removeEventListener('onToggle', onToggleListener);
+        todoElm.removeEventListener('onRemove', onRemoveListener);
+      };
       this._container.appendChild(todoElm);
     });
   }
 
   _add() {
+    debugger
     const inputElm = this._shadowRoot.querySelector('input');
     this._todoList.push({label: inputElm.value, checked: false});
     inputElm.value = '';
