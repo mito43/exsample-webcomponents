@@ -82,7 +82,7 @@ class App extends HTMLElement {
       todoElm.checked = item.checked;
       todoElm.index = index;
       const onToggleListener = this._toggle.bind(this);
-      const onRemoveListener = this._toggle.bind(this);
+      const onRemoveListener = this._remove.bind(this);
       todoElm.addEventListener('onToggle', onToggleListener);
       todoElm.addEventListener('onRemove', onRemoveListener);
       todoElm.clearListner = () => {
@@ -111,6 +111,7 @@ class App extends HTMLElement {
 
   _remove(e) {
     this._todoList.splice(e.detail, 1);
+    debugger
     this._render();
   }
 }
