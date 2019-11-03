@@ -5,7 +5,7 @@ class App extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
-    this.todoList = [
+    this._todoList = [
       {
         label: 'TaskA',
         checked: false,
