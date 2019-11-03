@@ -93,7 +93,6 @@ class App extends HTMLElement {
   }
 
   _add() {
-    debugger
     const inputElm = this._shadowRoot.querySelector('input');
     this._todoList.push({label: inputElm.value, checked: false});
     inputElm.value = '';
