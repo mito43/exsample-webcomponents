@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:native:helloworld": "owc-dev-server ./src/native/helloworld/index.html --open --watch",
-    "dev:native:adapted-callback": "serve ./src/native/adapted-callback/index.html --open --watch",
-    "dev:native:todo": "owc-dev-server ./src/native/todo/index.html --open --watch",
+    "dev:native:helloworld": "owc-dev-server --app-index ./src/native/helloworld/index.html --open --watch",
+    "dev:native:adapted-callback": "owc-dev-server --app-index ./src/native/adapted-callback/index.html --open --watch",
+    "dev:native:todo": "owc-dev-server --app-index ./src/native/todo/index.html --open --watch",
     "dev:lit-html:todo": "owc-dev-server --app-index ./src/lit-html/index.html --open --watch"
   },
   "author": "",
