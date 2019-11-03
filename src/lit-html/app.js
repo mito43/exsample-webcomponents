@@ -1,10 +1,10 @@
+import { html, render } from 'lit-html';
 import './todo.js';
 
 class App extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({mode: 'open'});
-    this._shadowRoot.appendChild(this._template().content.cloneNode(true));
     this._todoList = [
       {
         label: 'TaskA',
@@ -19,79 +19,81 @@ class App extends HTMLElement {
         checked: false,
       }
     ];
-    this._container = this._shadowRoot.getElementById('container');
-    this.submitBtn = this._shadowRoot.querySelector('button');
-    this.submitBtn.addEventListener('click', () => this._add());
   }
 
   connectedCallback() {
-    this._render();
+    render(this.template(), this._shadowRoot, {eventContext: this});
   }
 
-  _template() {
-    const template = document.createElement('template');
-    template.innerHTML = `
+  template() {
+    return html`
       <style>
-      :host {
-        display: block;
-        font-family: Helvetica;
-        font-weight: bold;
-        color: black;
-      }
-      h1 {
-        text-align: center;
-        font-size: 50px;
-      }
-      form {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      #container x-todo {
-        text-align: center;
-      }
+        :host {
+          display: block;
+          font-family: Helvetica;
+          font-weight: bold;
+          color: black;
+        }
+        h1 {
+          text-align: center;
+          font-size: 50px;
+        }
+        form {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        #container x-todo {
+          text-align: center;
+        }
       </style>
       <h1>Todo App</h1>
       <form>
         <input type="text"></input>
-        <button type="button">submit</button>
+        <button type="button" @click=${this._add}>submit</button>
       </form>
-      <div id="container"></div>
-  `;
-    return template;
+      <div id="container">
+        ${this.todoList.map((item, index) => html`
+          <x-todo
+            ?checked=${item.checked}
+            .index=${index}
+            label=${item.label}
+            @onToggle=${this._toggle}
+            @onRemove=${this._remove}>
+          </x-todo>
+          `
+        )}
+      </div>
+    `;
   }
 
-  _render() {
-    this._container.innerHTML = '';
-    this._todoList.forEach((item, index) => {
-      const todoElm = document.createElement('x-todo');
-      todoElm.addEventListener('onToggle', this._toggle.bind(this));
-      todoElm.addEventListener('onRemove', this._remove.bind(this));
-      todoElm.label = item.label;
-      todoElm.checked = item.checked;
-      todoElm.index = index;
-      this._container.appendChild(todoElm);
-    });
-  }
-
-  _add() {
+  _add(e) {
+    e.preventDefault();
     const inputElm = this._shadowRoot.querySelector('input');
-    this._todoList.push({label: inputElm.value, checked: false});
-    inputElm.value = '';
-    this._render();
+    if(inputElm.value.length > 0) {
+      this.todoList = [...this._todoList, { label: inputElm.value, checked: false }];
+      inputElm.value = '';
+    }
   }
 
   _toggle(e) {
-    const todo = this._todoList[e.detail];
-    const hoge = Object.assign({}, todo, {
-      checked: !todo.checked
+    this.todoList = this._todoList.map((todo, index) => {
+      return index === e.detail ? {...todo, checked: !todo.checked} : todo;
     });
-    this._todoList[e.detail] = hoge;
-    this._render();
   }
 
   _remove(e) {
-    this._todoList.splice(e.detail, 1);
-    this._render();
+    this.todoList = this._todoList.filter((todo, index) => {
+      return index !== e.detail;
+    });
+  }
+
+  set todoList(value) {
+    this._todoList = value;
+    render(this.template(), this._shadowRoot, {eventContext: this});
+  }
+
+  get todoList() {
+    return this._todoList;
   }
 }
 

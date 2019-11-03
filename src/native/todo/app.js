@@ -26,6 +26,7 @@ class App extends HTMLElement {
     this._submitBtn.clearListner = () => {
       this._submitBtn.removeEventListener('click', clickListener)
     };
+    this._render();
   }
 
   connectedCallback() {
