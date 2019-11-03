@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:native:helloworld": "serve ./src/native/helloworld",
-    "dev:native:adapted-callback": "serve ./src/native/adapted-callback",
-    "dev:native:todo": "serve ./src/native/todo"
+    "dev:native:helloworld": "owc-dev-server ./src/native/helloworld/index.html --open --watch",
+    "dev:native:adapted-callback": "serve ./src/native/adapted-callback/index.html --open --watch",
+    "dev:native:todo": "owc-dev-server ./src/native/todo/index.html --open --watch",
+    "dev:lit-html:todo": "owc-dev-server --app-index ./src/lit-html/index.html --open --watch"
   },
   "author": "",
   "license": "",
   "devDependencies": {
-    "serve": "^11.2.0"
+    "owc-dev-server": "^1.0.1"
+  },
+  "dependencies": {
+    "lit-html": "^1.1.2"
   }
 }
