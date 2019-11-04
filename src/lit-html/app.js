@@ -23,6 +23,7 @@ class App extends HTMLElement {
 
   connectedCallback() {
     render(this._template(), this._shadowRoot, {eventContext: this});
+    this._inputElm = this._shadowRoot.querySelector('input');
   }
 
   _template() {
@@ -67,9 +68,8 @@ class App extends HTMLElement {
   }
 
   _add() {
-    const inputElm = this._shadowRoot.querySelector('input');
-    this._todoList = [...this._todoList, { label: inputElm.value, checked: false }];
-    inputElm.value = '';
+    this._todoList = [...this._todoList, { label: this._inputElm.value, checked: false }];
+    this._inputElm.value = '';
     render(this._template(), this._shadowRoot, {eventContext: this});
   }
 
