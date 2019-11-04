@@ -1,13 +1,14 @@
 {
   "name": "exsample-webcomponents",
-  "version": "1.0.0",
+  "version": "",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "dev:native:helloworld": "owc-dev-server --app-index ./src/native/helloworld/index.html --open --watch",
     "dev:native:adapted-callback": "owc-dev-server --app-index ./src/native/adapted-callback/index.html --open --watch",
     "dev:native:todo": "owc-dev-server --app-index ./src/native/todo/index.html --open --watch",
-    "dev:lit-html:todo": "owc-dev-server --app-index ./src/lit-html/index.html --open --watch"
+    "dev:lit-html": "owc-dev-server --app-index ./src/lit-html/index.html --open --watch",
+    "dev:lit-element": "owc-dev-server --app-index ./src/lit-element/index.html --open --watch"
   },
   "author": "",
   "license": "",
@@ -15,6 +16,7 @@
     "owc-dev-server": "^1.0.1"
   },
   "dependencies": {
+    "lit-element": "^2.2.1",
     "lit-html": "^1.1.2"
   }
 }
