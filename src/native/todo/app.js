@@ -26,6 +26,7 @@ class App extends HTMLElement {
     this._submitBtn.clearListner = () => {
       this._submitBtn.removeEventListener('click', clickListener)
     };
+    this._inputElm = this._shadowRoot.querySelector('input');
   }
 
   connectedCallback() {
@@ -91,9 +92,8 @@ class App extends HTMLElement {
   }
 
   _add() {
-    const inputElm = this._shadowRoot.querySelector('input');
-    this._todoList = [...this._todoList, { label: inputElm.value, checked: false }];
-    inputElm.value = '';
+    this._todoList = [...this._todoList, { label: this._inputElm.value, checked: false }];
+    this._inputElm.value = '';
     this._render();
   }
 
