@@ -13,7 +13,8 @@ class HTMLTodoElement extends LitElement {
         reflect: true
       },
       index: {
-        type: Number
+        type: Number,
+        reflect: true
       }
     }
   }
