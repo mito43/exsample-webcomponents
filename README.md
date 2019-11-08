@@ -10,15 +10,15 @@
 # Hello World
 $ npm run dev:native:helloworld
 
-LifeCycle Test(adapted-callback)
+# LifeCycle Test(adapted-callback)
 $ npm run dev:native:adapted-callback
 
-Native Todo
+# Native Todo
 $ npm run dev:native:todo
 
-lit-html Todo
+# lit-html Todo
 $ npm run dev:lit-html
 
-lit-element Todo
+# lit-element Todo
 $ npm run dev:lit-element
 ```
